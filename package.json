@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
+    "dev": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web"
@@ -22,7 +23,7 @@
     "lucide-react-native": "^0.400.0",
     "react": "18.2.0",
     "react-native": "0.74.6",
-    "react-native-maps": "^1.18.0",
+    "react-native-maps": "1.7.1",
     "react-native-safe-area-context": "^5.4.0",
     "react-native-screens": "~4.11.1",
     "react-native-svg": "^15.11.2"
