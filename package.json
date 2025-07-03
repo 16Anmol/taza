@@ -1,5 +1,5 @@
 {
-  "name": "taazabazaar1",
+  "name": "mandikharidari",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
@@ -18,9 +18,11 @@
     "expo-location": "~18.1.6",
     "expo-router": "~5.1.2",
     "expo-status-bar": "~2.2.3",
+    "expo-sms": "~12.0.1",
     "lucide-react-native": "^0.468.0",
     "react": "^19.0.0",
     "react-native": "^0.79.4",
+    "react-native-maps": "^1.18.0",
     "react-native-safe-area-context": "^5.4.0",
     "react-native-screens": "~4.11.1",
     "react-native-svg": "^15.11.2"

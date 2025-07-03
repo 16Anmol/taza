@@ -6,22 +6,22 @@ export default function WelcomeScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
-        <Image source={{ uri: "/placeholder.svg?height=200&width=200" }} style={styles.heroImage} />
+        <Image source={require("../../assets/madikharidari.jpg")} style={styles.heroImage} />
 
-        <Text style={styles.title}>Welcome to TaazaBazaar</Text>
+        <Text style={styles.title}>Welcome to MandiKharidari</Text>
         <Text style={styles.subtitle}>Fresh vegetables and fruits delivered to your doorstep</Text>
 
         <View style={styles.features}>
           <View style={styles.feature}>
-            <Leaf size={24} color="#22C55E" />
+            <Leaf size={24} color="#D97706" />
             <Text style={styles.featureText}>Fresh & Organic</Text>
           </View>
           <View style={styles.feature}>
-            <ShoppingBag size={24} color="#22C55E" />
+            <ShoppingBag size={24} color="#D97706" />
             <Text style={styles.featureText}>Easy Ordering</Text>
           </View>
           <View style={styles.feature}>
-            <Users size={24} color="#22C55E" />
+            <Users size={24} color="#D97706" />
             <Text style={styles.featureText}>Trusted by Thousands</Text>
           </View>
         </View>
@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     marginBottom: 40,
+    borderRadius: 100,
   },
   title: {
     fontSize: 28,
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   customerButton: {
-    backgroundColor: "#22C55E",
+    backgroundColor: "#D97706",
     paddingVertical: 16,
     borderRadius: 12,
     alignItems: "center",

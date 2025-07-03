@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "TaazaBazaar1",
-    "slug": "taazabazaar",
+    "name": "MandiKharidari",
+    "slug": "mandikharidari",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/madikharidari.jpg",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/madikharidari.jpg",
       "resizeMode": "contain",
-      "backgroundColor": "#22C55E"
+      "backgroundColor": "#D97706"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
@@ -17,15 +17,23 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#22C55E"
+        "foregroundImage": "./assets/madikharidari.jpg",
+        "backgroundColor": "#D97706"
       },
-      "permissions": ["ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"]
+      "permissions": [
+        "ACCESS_FINE_LOCATION", 
+        "ACCESS_COARSE_LOCATION",
+        "RECEIVE_SMS",
+        "READ_SMS"
+      ]
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/madikharidari.jpg"
     },
-    "plugins": ["expo-location"],
+    "plugins": [
+      "expo-location",
+      "expo-sms"
+    ],
     "sdkVersion": "53.0.0"
   }
 }

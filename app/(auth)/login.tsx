@@ -46,7 +46,7 @@ export default function LoginScreen() {
       <KeyboardAvoidingView style={styles.keyboardView} behavior={Platform.OS === "ios" ? "padding" : "height"}>
         <ScrollView contentContainerStyle={styles.scrollContent}>
           <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-            <ArrowLeft size={24} color="#22C55E" />
+            <ArrowLeft size={24} color="#D97706" />
           </TouchableOpacity>
 
           <View style={styles.header}>
@@ -56,7 +56,7 @@ export default function LoginScreen() {
 
           <View style={styles.form}>
             <View style={styles.inputContainer}>
-              <Phone size={20} color="#22C55E" style={styles.inputIcon} />
+              <Phone size={20} color="#D97706" style={styles.inputIcon} />
               <TextInput
                 style={styles.input}
                 placeholder="Phone Number"
@@ -69,7 +69,7 @@ export default function LoginScreen() {
             </View>
 
             <View style={styles.inputContainer}>
-              <Lock size={20} color="#22C55E" style={styles.inputIcon} />
+              <Lock size={20} color="#D97706" style={styles.inputIcon} />
               <TextInput
                 style={[styles.input, styles.passwordInput]}
                 placeholder="Password"
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: "#F0FDF4",
+    backgroundColor: "#FED7AA",
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 20,
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   loginButton: {
-    backgroundColor: "#22C55E",
+    backgroundColor: "#D97706",
     borderRadius: 12,
     height: 50,
     justifyContent: "center",
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
   },
   registerLink: {
     fontSize: 14,
-    color: "#22C55E",
+    color: "#D97706",
     fontWeight: "600",
   },
 })

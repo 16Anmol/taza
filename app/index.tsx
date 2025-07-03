@@ -26,9 +26,9 @@ export default function SplashScreen() {
 
   return (
     <View style={styles.container}>
-      <Image source={{ uri: "/placeholder.svg?height=120&width=120" }} style={styles.logo} />
-      <Text style={styles.title}>TaazaBazaar</Text>
-      <Text style={styles.subtitle}>Fresh • Fast • Delivered</Text>
+      <Image source={require("../assets/madikharidari.jpg")} style={styles.logo} />
+      <Text style={styles.title}>MandiKharidari</Text>
+      <Text style={styles.subtitle}>Hamara Apna Bazaar</Text>
     </View>
   )
 }
@@ -38,12 +38,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#22C55E",
+    backgroundColor: "#D97706",
   },
   logo: {
     width: 120,
     height: 120,
     marginBottom: 20,
+    borderRadius: 60,
   },
   title: {
     fontSize: 32,

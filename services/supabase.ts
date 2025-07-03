@@ -34,6 +34,48 @@ export const getProducts = async (): Promise<Product[]> => {
   return await mockDB.getProducts()
 }
 
+export const getProductsByCategory = async (category: string): Promise<Product[]> => {
+  try {
+    if (await isSupabaseAvailable()) {
+      const { data, error } = await supabase
+        .from("inventory")
+        .select("*")
+        .eq("type", category)
+        .order("name")
+      if (error) throw error
+      return data || []
+    }
+  } catch (error) {
+    console.log("Using mock data for category products")
+  }
+
+  // Fallback to mock data
+  const products = await mockDB.getProducts()
+  return products.filter(p => p.type === category)
+}
+
+export const searchProducts = async (query: string): Promise<Product[]> => {
+  try {
+    if (await isSupabaseAvailable()) {
+      const { data, error } = await supabase
+        .from("inventory")
+        .select("*")
+        .ilike("name", `%${query}%`)
+        .order("name")
+      if (error) throw error
+      return data || []
+    }
+  } catch (error) {
+    console.log("Using mock data for search")
+  }
+
+  // Fallback to mock data
+  const products = await mockDB.getProducts()
+  return products.filter(p => 
+    p.name.toLowerCase().includes(query.toLowerCase())
+  )
+}
+
 export const addProduct = async (product: Omit<Product, "id" | "created_at" | "updated_at">) => {
   try {
     if (await isSupabaseAvailable()) {
@@ -127,11 +169,35 @@ export const getOrders = async (): Promise<Order[]> => {
   return await mockDB.getOrders()
 }
 
+export const getUserOrders = async (userId: string): Promise<Order[]> => {
+  try {
+    if (await isSupabaseAvailable()) {
+      const { data, error } = await supabase
+        .from("orders")
+        .select("*")
+        .eq("user_id", userId)
+        .order("timestamp", { ascending: false })
+      if (error) throw error
+      return data || []
+    }
+  } catch (error) {
+    console.log("Using mock data for user orders")
+  }
+
+  // Fallback to mock data
+  const orders = await mockDB.getOrders()
+  return orders.filter(order => order.user_id === userId)
+}
+
 export const updateOrderStatus = async (id: string, status: Order["status"]) => {
   try {
     if (await isSupabaseAvailable()) {
       const { data, error } = await supabase.from("orders").update({ status }).eq("id", id).select().single()
       if (error) throw error
+      
+      // Send notification to user
+      await sendOrderStatusNotification(id, status)
+      
       return data
     }
   } catch (error) {
@@ -140,6 +206,32 @@ export const updateOrderStatus = async (id: string, status: Order["status"]) => 
 
   // Fallback to mock data
   return await mockDB.updateOrderStatus(id, status)
+}
+
+// Notification system
+export const sendOrderStatusNotification = async (orderId: string, status: Order["status"]) => {
+  const messages = {
+    confirmed: "Your order has been confirmed! We're preparing your fresh vegetables and fruits.",
+    preparing: "Your order is being prepared with care. Fresh items are being selected for you.",
+    out_for_delivery: "Your order is out for delivery! Our delivery partner will reach you soon.",
+    delivered: "Your order has been delivered successfully! Thank you for choosing MandiKharidari."
+  }
+
+  const message = messages[status as keyof typeof messages]
+  if (message) {
+    try {
+      if (await isSupabaseAvailable()) {
+        await supabase.from("notifications").insert([{
+          order_id: orderId,
+          message: message,
+          status: status,
+          created_at: new Date().toISOString()
+        }])
+      }
+    } catch (error) {
+      console.log("Failed to send notification:", error)
+    }
+  }
 }
 
 // Mock subscriptions for development
@@ -160,6 +252,22 @@ export const subscribeToOrders = (callback: (orders: Order[]) => void) => {
   // Return a mock subscription
   return {
     unsubscribe: () => console.log("Unsubscribed from orders"),
+  }
+}
+
+// OTP Service
+export const generateOTP = (): string => {
+  return Math.floor(100000 + Math.random() * 900000).toString()
+}
+
+export const sendOTP = async (phoneNumber: string, otp: string): Promise<boolean> => {
+  try {
+    // In production, integrate with SMS service like Twilio
+    console.log(`Sending OTP ${otp} to ${phoneNumber}`)
+    return true
+  } catch (error) {
+    console.error("Failed to send OTP:", error)
+    return false
   }
 }
 

@@ -16,6 +16,7 @@ import {
 import { router } from "expo-router"
 import { useAuth } from "../../contexts/AuthContext"
 import { User, Phone, Lock, Eye, EyeOff, ArrowLeft, MapPin } from "lucide-react-native"
+import { generateOTP, sendOTP } from "../../services/supabase"
 
 export default function RegisterScreen() {
   const [formData, setFormData] = useState({
@@ -28,7 +29,36 @@ export default function RegisterScreen() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [otpSent, setOtpSent] = useState(false)
+  const [otp, setOtp] = useState("")
+  const [generatedOtp, setGeneratedOtp] = useState("")
   const { signUp } = useAuth()
+
+  const handleSendOTP = async () => {
+    if (!formData.phone || formData.phone.length < 10) {
+      Alert.alert("Error", "Please enter a valid phone number")
+      return
+    }
+
+    const otpCode = generateOTP()
+    setGeneratedOtp(otpCode)
+    
+    const success = await sendOTP(formData.phone, otpCode)
+    if (success) {
+      setOtpSent(true)
+      Alert.alert("OTP Sent", `OTP sent to ${formData.phone}. For demo, use: ${otpCode}`)
+    } else {
+      Alert.alert("Error", "Failed to send OTP. Please try again.")
+    }
+  }
+
+  const handleVerifyOTP = () => {
+    if (otp === generatedOtp) {
+      handleRegister()
+    } else {
+      Alert.alert("Error", "Invalid OTP. Please try again.")
+    }
+  }
 
   const handleRegister = async () => {
     if (!formData.name || !formData.phone || !formData.password || !formData.address) {
@@ -62,7 +92,7 @@ export default function RegisterScreen() {
       <KeyboardAvoidingView style={styles.keyboardView} behavior={Platform.OS === "ios" ? "padding" : "height"}>
         <ScrollView contentContainerStyle={styles.scrollContent}>
           <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-            <ArrowLeft size={24} color="#22C55E" />
+            <ArrowLeft size={24} color="#D97706" />
           </TouchableOpacity>
 
           <View style={styles.header}>
@@ -72,7 +102,7 @@ export default function RegisterScreen() {
 
           <View style={styles.form}>
             <View style={styles.inputContainer}>
-              <User size={20} color="#22C55E" style={styles.inputIcon} />
+              <User size={20} color="#D97706" style={styles.inputIcon} />
               <TextInput
                 style={styles.input}
                 placeholder="Full Name"
@@ -84,7 +114,7 @@ export default function RegisterScreen() {
             </View>
 
             <View style={styles.inputContainer}>
-              <Phone size={20} color="#22C55E" style={styles.inputIcon} />
+              <Phone size={20} color="#D97706" style={styles.inputIcon} />
               <TextInput
                 style={styles.input}
                 placeholder="Phone Number"
@@ -93,11 +123,32 @@ export default function RegisterScreen() {
                 onChangeText={(text) => setFormData((prev) => ({ ...prev, phone: text }))}
                 keyboardType="phone-pad"
                 autoCapitalize="none"
+                editable={!otpSent}
               />
+              {!otpSent && (
+                <TouchableOpacity style={styles.otpButton} onPress={handleSendOTP}>
+                  <Text style={styles.otpButtonText}>Send OTP</Text>
+                </TouchableOpacity>
+              )}
             </View>
 
+            {otpSent && (
+              <View style={styles.inputContainer}>
+                <Lock size={20} color="#D97706" style={styles.inputIcon} />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Enter OTP"
+                  placeholderTextColor="#94A3B8"
+                  value={otp}
+                  onChangeText={setOtp}
+                  keyboardType="numeric"
+                  maxLength={6}
+                />
+              </View>
+            )}
+
             <View style={styles.inputContainer}>
-              <MapPin size={20} color="#22C55E" style={styles.inputIcon} />
+              <MapPin size={20} color="#D97706" style={styles.inputIcon} />
               <TextInput
                 style={styles.input}
                 placeholder="Delivery Address"
@@ -110,7 +161,7 @@ export default function RegisterScreen() {
             </View>
 
             <View style={styles.inputContainer}>
-              <Lock size={20} color="#22C55E" style={styles.inputIcon} />
+              <Lock size={20} color="#D97706" style={styles.inputIcon} />
               <TextInput
                 style={[styles.input, styles.passwordInput]}
                 placeholder="Password"
@@ -126,7 +177,7 @@ export default function RegisterScreen() {
             </View>
 
             <View style={styles.inputContainer}>
-              <Lock size={20} color="#22C55E" style={styles.inputIcon} />
+              <Lock size={20} color="#D97706" style={styles.inputIcon} />
               <TextInput
                 style={[styles.input, styles.passwordInput]}
                 placeholder="Confirm Password"
@@ -143,10 +194,12 @@ export default function RegisterScreen() {
 
             <TouchableOpacity
               style={[styles.registerButton, loading && styles.disabledButton]}
-              onPress={handleRegister}
+              onPress={otpSent ? handleVerifyOTP : handleSendOTP}
               disabled={loading}
             >
-              <Text style={styles.registerButtonText}>{loading ? "Creating Account..." : "Create Account"}</Text>
+              <Text style={styles.registerButtonText}>
+                {loading ? "Creating Account..." : otpSent ? "Verify OTP & Create Account" : "Send OTP"}
+              </Text>
             </TouchableOpacity>
 
             <View style={styles.loginContainer}>
@@ -178,7 +231,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: "#F0FDF4",
+    backgroundColor: "#FED7AA",
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 20,
@@ -229,8 +282,20 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: "center",
   },
+  otpButton: {
+    backgroundColor: "#D97706",
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 8,
+    marginRight: 12,
+  },
+  otpButtonText: {
+    color: "#FFFFFF",
+    fontSize: 12,
+    fontWeight: "600",
+  },
   registerButton: {
-    backgroundColor: "#22C55E",
+    backgroundColor: "#D97706",
     borderRadius: 12,
     height: 50,
     justifyContent: "center",
@@ -256,7 +321,7 @@ const styles = StyleSheet.create({
   },
   loginLink: {
     fontSize: 14,
-    color: "#22C55E",
+    color: "#D97706",
     fontWeight: "600",
   },
 })

@@ -134,7 +134,12 @@ export default function CartScreen() {
         <View style={styles.cartItems}>
           {items.map((item) => (
             <View key={item.id} style={styles.cartItem}>
-              <Image source={{ uri: item.image || "/placeholder.svg?height=80&width=80" }} style={styles.itemImage} />
+              <Image 
+                source={{ 
+                  uri: item.image || "https://images.pexels.com/photos/533280/pexels-photo-533280.jpeg?auto=compress&cs=tinysrgb&w=80" 
+                }} 
+                style={styles.itemImage} 
+              />
               <View style={styles.itemInfo}>
                 <Text style={styles.itemName}>{item.name}</Text>
                 <Text style={styles.itemPrice}>
@@ -143,11 +148,11 @@ export default function CartScreen() {
                 <View style={styles.itemControls}>
                   <View style={styles.quantitySelector}>
                     <TouchableOpacity style={styles.quantityButton} onPress={() => handleQuantityChange(item.id, -0.5)}>
-                      <Minus size={16} stroke="#22C55E" strokeWidth={2} />
+                      <Minus size={16} stroke="#D97706" strokeWidth={2} />
                     </TouchableOpacity>
                     <Text style={styles.quantityText}>{item.quantity}</Text>
                     <TouchableOpacity style={styles.quantityButton} onPress={() => handleQuantityChange(item.id, 0.5)}>
-                      <Plus size={16} stroke="#22C55E" strokeWidth={2} />
+                      <Plus size={16} stroke="#D97706" strokeWidth={2} />
                     </TouchableOpacity>
                   </View>
                   <TouchableOpacity style={styles.removeButton} onPress={() => removeItem(item.id)}>
@@ -165,7 +170,7 @@ export default function CartScreen() {
 
       <View style={styles.footer}>
         <View style={styles.deliveryInfo}>
-          <MapPin size={16} stroke="#22C55E" />
+          <MapPin size={16} stroke="#D97706" />
           <Text style={styles.deliveryText}>Delivery to: {user?.address || "Current Location"}</Text>
         </View>
 
@@ -268,9 +273,9 @@ const styles = StyleSheet.create({
     width: 28,
     height: 28,
     borderRadius: 14,
-    backgroundColor: "#F0FDF4",
+    backgroundColor: "#FED7AA",
     borderWidth: 1,
-    borderColor: "#22C55E",
+    borderColor: "#D97706",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -297,7 +302,7 @@ const styles = StyleSheet.create({
   itemTotalPrice: {
     fontSize: 16,
     fontWeight: "700",
-    color: "#22C55E",
+    color: "#D97706",
   },
   footer: {
     backgroundColor: "#FFFFFF",
@@ -318,12 +323,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 16,
     padding: 12,
-    backgroundColor: "#F0FDF4",
+    backgroundColor: "#FED7AA",
     borderRadius: 8,
   },
   deliveryText: {
     fontSize: 14,
-    color: "#15803D",
+    color: "#92400E",
     marginLeft: 8,
     flex: 1,
   },
@@ -341,10 +346,10 @@ const styles = StyleSheet.create({
   totalPrice: {
     fontSize: 20,
     fontWeight: "700",
-    color: "#22C55E",
+    color: "#D97706",
   },
   checkoutButton: {
-    backgroundColor: "#22C55E",
+    backgroundColor: "#D97706",
     borderRadius: 12,
     paddingVertical: 16,
     alignItems: "center",
@@ -375,7 +380,7 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   shopButton: {
-    backgroundColor: "#22C55E",
+    backgroundColor: "#D97706",
     paddingHorizontal: 24,
     paddingVertical: 12,
     borderRadius: 8,
