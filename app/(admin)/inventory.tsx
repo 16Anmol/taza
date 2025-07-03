@@ -13,7 +13,7 @@ import {
   Modal,
   RefreshControl,
 } from "react-native"
-import { Plus, Edit3, Trash2, Package, Search } from "lucide-react-native"
+import { Plus, CreditCard as Edit3, Trash2, Package, Search } from "lucide-react-native"
 import { 
   getProducts, 
   addProduct, 
