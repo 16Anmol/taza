@@ -11,7 +11,7 @@ import {
   Alert,
   RefreshControl,
 } from "react-native"
-import { ArrowLeft, User, Phone, MapPin, Package, Clock, CheckCircle } from "lucide-react-native"
+import { ArrowLeft, User, Phone, MapPin, Package, Clock, CircleCheck as CheckCircle } from "lucide-react-native"
 import { router } from "expo-router"
 import { useAuth } from "../../contexts/AuthContext"
 import { getUserOrders, type Order } from "../../services/supabase"
