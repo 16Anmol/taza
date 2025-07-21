@@ -1,5 +1,3 @@
-"use client"
-
 import { useState } from "react"
 import {
   View,
@@ -42,7 +40,6 @@ export default function LoginScreen() {
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"}>
       <View style={styles.content}>
         <View style={styles.header}>
-          <Image source={{ uri: "/placeholder.svg?height=80&width=80" }} style={styles.logo} />
           <Text style={styles.title}>MandiKharidari</Text>
           <Text style={styles.subtitle}>Admin Panel</Text>
         </View>
@@ -102,12 +99,6 @@ const styles = StyleSheet.create({
   header: {
     alignItems: "center",
     marginBottom: 48,
-  },
-  logo: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    marginBottom: 16,
   },
   title: {
     fontSize: 28,

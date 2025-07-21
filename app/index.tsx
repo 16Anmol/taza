@@ -1,5 +1,3 @@
-"use client"
-
 import { useAuth } from "@/contexts/AuthContext"
 import { useRouter } from "expo-router"
 import { useEffect } from "react"
@@ -17,7 +15,7 @@ export default function Index() {
         router.replace("/(auth)/login")
       }
     }
-  }, [session, loading])
+  }, [session, loading, router])
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>

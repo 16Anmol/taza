@@ -1,5 +1,3 @@
-"use client"
-
 import { useState, useEffect } from "react"
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Image, RefreshControl, Alert } from "react-native"
 import { router } from "expo-router"
@@ -97,7 +95,7 @@ export default function DashboardScreen() {
 
   const ProductCard = ({ product }: { product: Product }) => (
     <View style={styles.productCard}>
-      <Image source={{ uri: product.image_url || "/placeholder.svg?height=80&width=80" }} style={styles.productImage} />
+      <Image source={{ uri: "https://images.pexels.com/photos/1435904/pexels-photo-1435904.jpeg?auto=compress&cs=tinysrgb&w=80&h=80&dpr=1" }} style={styles.productImage} />
       <View style={styles.productInfo}>
         <Text style={styles.productName}>{product.name}</Text>
         <Text style={styles.productPrice}>₹{product.price}/kg</Text>
