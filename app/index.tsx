@@ -14,7 +14,7 @@ export default function Index() {
       if (session) {
         router.replace("/(tabs)")
       } else {
-        router.replace("/")
+        router.replace("/(auth)/login")
       }
     }
   }, [session, loading])
